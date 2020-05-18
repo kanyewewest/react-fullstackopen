@@ -3,22 +3,33 @@ import ReactDOM from 'react-dom';
 
 const App = () => {
   const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState(new Array(anecdotes.length).fill(0));
 
   function randomBetween(lower, upper) {
     return Math.floor(Math.random() * (upper + 1) + lower);
   }
 
   function handleNextAnecdote() {
-    let random = randomBetween(0, anecdotes.length - 1);
+    const random = randomBetween(0, anecdotes.length - 1);
     return setSelected(
       random !== selected ? random : (random + 1) % (anecdotes.length - 1),
     );
   }
 
+  function handleVote() {
+    const pointsCopy = [...points];
+    ++pointsCopy[selected];
+    return setPoints(pointsCopy);
+  }
+
   return (
     <div>
       <p>{anecdotes[selected]}</p>
-      <button onClick={handleNextAnecdote}>Next anecdote</button>
+      <p>Has {points[selected]} votes</p>
+      <div>
+        <button onClick={handleVote}>Vote</button>
+        <button onClick={handleNextAnecdote}>Next anecdote</button>
+      </div>
     </div>
   );
 };
