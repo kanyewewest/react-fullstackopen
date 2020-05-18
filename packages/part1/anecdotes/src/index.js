@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+const Anecdote = ({ anecdote, points }) => {
+  return (
+    <>
+      <p>{anecdote}</p>
+      <p>Has {points} votes</p>
+    </>
+  );
+};
+
 const App = () => {
   const [selected, setSelected] = useState(0);
   const [points, setPoints] = useState(new Array(anecdotes.length).fill(0));
@@ -22,14 +31,28 @@ const App = () => {
     return setPoints(pointsCopy);
   }
 
+  function getMostVotedAnecdoteIndex() {
+    // not efficient at all lmao
+    const max = Math.max(...points);
+    return points.findIndex((x) => x === max);
+  }
+
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <p>Has {points[selected]} votes</p>
+      <h1>Anecdote of the day</h1>
+      <Anecdote
+        anecdote={anecdotes[selected]}
+        points={points[selected]}
+      ></Anecdote>
       <div>
         <button onClick={handleVote}>Vote</button>
         <button onClick={handleNextAnecdote}>Next anecdote</button>
       </div>
+      <h1>Anecdote with most votes</h1>
+      <Anecdote
+        anecdote={anecdotes[getMostVotedAnecdoteIndex()]}
+        points={points[getMostVotedAnecdoteIndex()]}
+      ></Anecdote>
     </div>
   );
 };
