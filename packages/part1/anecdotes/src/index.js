@@ -10,7 +10,7 @@ const Anecdote = ({ anecdote, points }) => {
   );
 };
 
-const App = () => {
+const App = ({ anecdotes }) => {
   const [selected, setSelected] = useState(0);
   const [points, setPoints] = useState(new Array(anecdotes.length).fill(0));
 
