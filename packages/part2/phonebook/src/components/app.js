@@ -3,10 +3,17 @@ import React, { useState } from 'react';
 export const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '123-456-789' },
+    { name: 'Hellas', number: '123-456-789' },
+    { name: 'Hell', number: '123-456-789' },
   ]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [filter, setFilter] = useState('');
+  const filteredPersons = persons.filter((person) =>
+    person.name.includes(filter),
+  );
 
+  const handleFilterChange = (event) => setFilter(event.target.value);
   const handleNameChange = (event) => setNewName(event.target.value);
   const handleNumberChange = (event) => setNewNumber(event.target.value);
   const handleFormSubmit = (event) => {
@@ -29,6 +36,8 @@ export const App = () => {
 
   return (
     <div>
+      Filter:{' '}
+      <input type="text" value={filter} onChange={handleFilterChange}></input>
       <h2>Phonebook</h2>
       <form onSubmit={handleFormSubmit}>
         <div>
@@ -45,7 +54,7 @@ export const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map((person) => (
+        {filteredPersons.map((person) => (
           <li key={person.name}>
             {person.name} {person.number}
           </li>
