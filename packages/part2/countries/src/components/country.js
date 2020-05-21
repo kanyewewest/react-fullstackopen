@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Weather } from './weather';
 
 export const Country = ({ country, isListItem }) => {
   const [toggled, setToggled] = useState(false);
@@ -34,6 +35,10 @@ export const Country = ({ country, isListItem }) => {
             src={country.flag}
           ></img>
         </article>
+      ) : null}
+
+      {isListItem === undefined || toggled ? (
+        <Weather query={country.capital} />
       ) : null}
     </>
   );
